@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
+import python_avatars as pa
+import os
 
 app = Flask(__name__)
 
@@ -52,9 +54,12 @@ questions = [
 ]
 
 common_opportunities = {
-    ("The Women In Tech Conference (WITCON)", "https://wicsfiu.github.io/witcon2024/"): "A conference focused on empowering women in technology through networking and skill-building workshops.",
-    ("Shellhacks", "https://shellhacks2024.devpost.com"): "A hackathon that brings together students to create innovative solutions.",
-    ("Break Through Tech Sprinternship", "https://miami.breakthroughtech.org/programs/sprinternships/"): "A program providing women and non-binary students with internship opportunities.",
+    ("The Women In Tech Conference (WITCON)",
+     "https://wicsfiu.github.io/witcon2024/"): "A conference focused on empowering women in technology through networking and skill-building workshops.",
+    ("Shellhacks",
+     "https://shellhacks2024.devpost.com"): "A hackathon that brings together students to create innovative solutions.",
+    ("Break Through Tech Sprinternship",
+     "https://miami.breakthroughtech.org/programs/sprinternships/"): "A program providing women and non-binary students with internship opportunities.",
     ("Build INIT", ""): "An initiative at FIU designed to empower students through tech-focused workshops."
 }
 
@@ -97,6 +102,7 @@ fiu_opportunities = {
     }
 }
 
+
 def determine_major(responses):
     # Logic to determine the major based on user responses
     if "Software Development" in responses:
@@ -112,8 +118,38 @@ def determine_major(responses):
     else:
         return None
 
+
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def home():
+    try:
+        # Create an avatar
+        avatar = pa.Avatar(
+            style=pa.AvatarStyle.CIRCLE,
+            background_color="#f0f8ff",  # Light blue background
+            top=pa.HairType.STRAIGHT_2,
+            hair_color=pa.HairColor.BROWN,
+            eyebrows=pa.EyebrowType.RAISED_EXCITED,
+            eyes=pa.EyeType.HAPPY,
+            nose=pa.NoseType.DEFAULT,
+            mouth=pa.MouthType.SMILE,
+            skin_color=pa.SkinColor.LIGHT,
+            accessory=pa.AccessoryType.PRESCRIPTION_2,
+            clothing=pa.ClothingType.COLLAR_SWEATER
+        )
+
+        # Ensure the static folder exists
+        if not os.path.exists('static'):
+            os.makedirs('static')
+
+        avatar.render("static/cute_female_avatar.svg")
+        return render_template('index.html')
+    except Exception as e:
+        return f"An error occurred: {e}"
+
+
+
+@app.route('/quiz', methods=['GET', 'POST'])
+def quiz():
     if request.method == 'POST':
         user_responses = []
         for i in range(1, len(questions) + 1):
@@ -128,12 +164,14 @@ def index():
         else:
             return "Error: No valid tech interest found."
 
-    return render_template('index_manar.html', questions=questions)
+    return render_template('quiz.html', questions=questions)
+
 
 @app.route('/results/<tech_interest>')
 def results(tech_interest):
     opportunities = fiu_opportunities.get(tech_interest, {})
     return render_template('results.html', tech_interest=tech_interest, opportunities=opportunities)
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

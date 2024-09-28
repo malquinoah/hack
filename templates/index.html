@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Photon by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Photon by HTML5 UP</title>
@@ -11,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="static/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	</head>
 	<script src="//code.tidio.co/cwrgji0p3nktidomydwqguuznumrr5ve.js" async></script>
 	<body class="is-preload">
@@ -18,34 +14,16 @@
 		<!-- Header -->
 			<section id="header">
 				<div class="inner">
-					<span class="icon solid major fa-cloud"></span>
-					<h1>Hi, I'm <strong>Photon</strong>, another fine<br />
-					little freebie from <a href="http://html5up.net">HTML5 UP</a>.</h1>
-					<p>Accumsan feugiat mi commodo erat lorem ipsum, sed magna<br />
-					lobortis feugiat sapien sed etiam volutpat accumsan.</p>
+					<span class="icon solid major "> <img src="static/cute_female_avatar.svg"></span>
+					<h1>Welcome to the Knight Foundation School <br> of Computing and Information Sciences</h1>
+					<p>Take the quiz below to pinpoint what area of technology interests you most</p>
 					<ul class="actions special">
-						<li><a href="#one" class="button scrolly">Discover</a></li>
+						<li><a href="{{url_for('quiz')}}" class="button scrolly">Take the Quiz</a></li>
 					</ul>
 				</div>
 			</section>
 
-		<!-- One -->
-			<section id="one" class="main style1">
-				<div class="container">
-					<div class="row gtr-150">
-						<div class="col-6 col-12-medium">
-							<header class="major">
-								<h2>Lorem ipsum dolor adipiscing<br />
-								amet dolor consequat</h2>
-							</header>
-							<p>Adipiscing a commodo ante nunc accumsan et interdum mi ante adipiscing. A nunc lobortis non nisl amet vis sed volutpat aclacus nascetur ac non. Lorem curae et ante amet sapien sed tempus adipiscing id accumsan.</p>
-						</div>
-						<div class="col-6 col-12-medium imp-medium">
-							<span class="image fit"><img src="static/images/pic01.jpg" alt="" /></span>
-						</div>
-					</div>
-				</div>
-			</section>
+
 
 		<!-- Two -->
 			<section id="two" class="main style2">
@@ -76,53 +54,64 @@
 
 		<!-- Three -->
 			<section id="three" class="main style1 special">
-				<div class="container">
-					<header class="major">
-						<h2>Adipiscing amet consequat</h2>
-					</header>
-					<p>Ante nunc accumsan et aclacus nascetur ac ante amet sapien sed.</p>
-					<div class="row gtr-150">
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="static/images/pic02.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="static/images/pic03.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="static/images/pic04.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</section>
+    <div class="container">
+       <header class="major">
+          <h2>Welcome to the Women in Tech Stories!</h2>
+       </header>
+       <p>Explore inspiring stories of women in technology.</p>
+       <div style="margin-bottom: 2rem;">
+           <button id="speakButton" style="margin-bottom: 1rem;">Hear the Story</button>
+       </div>
+       <script>
+           $('#speakButton').on('click', function() {
+               const storyText = "Hello!! I am Lyro and am going to walk you over the experiences of women who attended BreakThroughTechMiami's Guild at FIU. First up is Molayo Sobande, a student who will now be pursuing computer science as a major. She said, "Being a part of BreakThroughTechMiami, I went from being a somewhat timid public speaker with no solidified background knowledge of computer science to confidently presenting an app that my team and I made in just three days". Next is Sophia, a biology major surprised and proud of making a self-portrait through coding at Guild Workshop. Lastly we have FIU Alumni, Neica Sainvilus, who is now working at AMEX as a full-time software engineer because of BTT's Sprintern Program! Ladies, your journey in tech can start here! Each story is a reminder that you have a place in this field. Join us at FIU, where we empower each other to thrive, innovate, and break barriers. Together, we can create a diverse and inclusive tech community. Let's embark on this adventure together!";
 
-		<!-- Four -->
-			<section id="four" class="main style2 special">
-				<div class="container">
-					<header class="major">
-						<h2>Ipsum feugiat consequat?</h2>
-					</header>
-					<p>Sed lacus nascetur ac ante amet sapien.</p>
-					<ul class="actions special">
-						<li><a href="#" class="button wide primary">Sign Up</a></li>
-						<li><a href="#" class="button wide">Learn More</a></li>
-					</ul>
-				</div>
-			</section>
+               const utterance = new SpeechSynthesisUtterance(storyText);
+               window.speechSynthesis.speak(utterance);
+           });
+       </script>
+       <div class="row gtr-150">
+          <div class="col-4 col-12-medium">
+             <span class="image fit"><img src="static/images/pic02.jpg" alt="" /></span>
+             <h3>Magna feugiat lorem</h3>
+             <p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
+             <ul class="actions special">
+                <li><a href="#" class="button">More</a></li>
+             </ul>
+          </div>
+          <div class="col-4 col-12-medium">
+             <span class="image fit"><img src="static/images/pic03.jpg" alt="" /></span>
+             <h3>Magna feugiat lorem</h3>
+             <p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
+             <ul class="actions special">
+                <li><a href="#" class="button">More</a></li>
+             </ul>
+          </div>
+          <div class="col-4 col-12-medium">
+             <span class="image fit"><img src="static/images/pic04.jpg" alt="" /></span>
+             <h3>Magna feugiat lorem</h3>
+             <p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
+             <ul class="actions special">
+                <li><a href="#" class="button">More</a></li>
+             </ul>
+          </div>
+       </div>
+    </div>
+</section>
+
+<!--		&lt;!&ndash; Four &ndash;&gt;-->
+<!--			<section id="four" class="main style2 special">-->
+<!--				<div class="container">-->
+<!--					<header class="major">-->
+<!--						<h2>Ipsum feugiat consequat?</h2>-->
+<!--					</header>-->
+<!--					<p>Sed lacus nascetur ac ante amet sapien.</p>-->
+<!--					<ul class="actions special">-->
+<!--						<li><a href="#" class="button wide primary">Sign Up</a></li>-->
+<!--						<li><a href="#" class="button wide">Learn More</a></li>-->
+<!--					</ul>-->
+<!--				</div>-->
+<!--			</section>-->
 
 		<!-- Five -->
 		<!--
@@ -448,11 +437,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
 					<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
 					<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 				</ul>
 			</section>
 

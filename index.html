@@ -9,6 +9,15 @@
     <h1>Welcome to the Women in Tech Stories!</h1>
     <img src="{{ url_for('static', filename='cute_female_avatar.svg') }}" alt="Cute Female Avatar">
     <p>Explore inspiring stories of women in technology.</p>
+    <button id="speakButton">Hear the Story</button>
+    <script>
+        $('#speakButton').on('click', function() {
+            const storyText = "Hello!! I am Lyra and am going to walk you over the experiences of women who attended BreakThroughTechMiami's Guild at FIU. First up is Molayo Sobande, a student who will now be pursuing computer science as a major. She said, “Being a part of BreakThroughTechMiami, I went from being a somewhat timid public speaker with no solidified background knowledge of computer science to confidently presenting an app that my team and I made in just three days”. Next is Sophia, a biology major surprised and proud of making a self-portrait through coding at Guild Workshop. Lastly we have FIU Alumni, Neica Sainvilus, who is now working at AMEX as a full-time software engineer because of BTT's Sprintern Program! Ladies, your journey in tech can start here! Each story is a reminder that you have a place in this field. Join us at FIU, where we empower each other to thrive, innovate, and break barriers. Together, we can create a diverse and inclusive tech community. Let’s embark on this adventure together!";
+            
+            const utterance = new SpeechSynthesisUtterance(storyText);
+            window.speechSynthesis.speak(utterance);
+        });
+    </script>
 </body>
 </html>
 

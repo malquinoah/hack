@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Results</title>
+    <title>FIU Tech Quiz</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
     <noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
 </head>
@@ -11,9 +9,20 @@
 <section id="header">
     <div class="inner">
         <span class="icon solid major fa-cloud"></span>
-        <h1>What FIU Degree should you pursue?</h1>
-        <p>Consider joining our amazing community. Your recommended degree is <strong>{{ tech_interest }}</strong>.</p>
-        <a href="{{ url_for('home') }}">Back to the Homepage</a>
+        <h1>Answer the following question:</h1>
+        <form method="post">
+            <p>{{ question }}</p>
+            <div class="radio-container">
+                {% for option in options %}
+                    <div class="radio-item">
+                        <input type="radio" name="answer" value="{{ option['answer'] }}">
+                        <label for="option">{{ option['answer'] }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            <input type="submit" value="Next">
+        </form>
     </div>
 </section>
 <section id="footer">
@@ -25,4 +34,3 @@
 </section>
 </body>
 </html>
-

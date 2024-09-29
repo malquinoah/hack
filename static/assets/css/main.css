@@ -2587,7 +2587,7 @@ input, select, textarea {
 
 		ul.major-icons li {
 			display: inline-block;
-			padding: 2.5em;
+			padding: 1.5em;
 			text-align: center;
 		}
 
@@ -3259,7 +3259,7 @@ input, select, textarea {
 		/* List */
 
 			ul.major-icons li {
-				padding: 2em;
+				padding: 3em;
 			}
 
 				ul.major-icons li .icon {
@@ -3510,3 +3510,27 @@ input, select, textarea {
 			}
 
 	}
+
+input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 45%; /* Add margin to the left */
+    visibility: visible;
+    opacity: 1;
+    width: auto;
+    height: auto;
+    border: none; /* Remove any custom border */
+    background-color: transparent; /* Ensure background is transparent */
+    position: static; /* Reset the position */
+    z-index: auto; /* Reset the z-index */
+    -webkit-appearance: radio; /* Ensure default radio button appearance in WebKit browsers */
+    -moz-appearance: radio; /* Ensure default radio button appearance in Mozilla browsers */
+    appearance: radio; /* Ensure default radio button appearance in other browsers */
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+}
+
+

@@ -3,28 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results</title>
+    <title>Quiz Results</title>
 </head>
 <body>
-    <h1>Your Tech Interest: {{ tech_interest }}</h1>
-    <h2>Opportunities:</h2>
-
-    <h3>Clubs:</h3>
-    <ul>
-        {% for club in opportunities['Clubs'] %}
-            <li><a href="{{ club[1] }}">{{ club[0] }}</a></li>
-        {% endfor %}
-    </ul>
-
-    <h3>Additional Opportunities:</h3>
-    <ul>
-        {% for opportunity, description in opportunities['Opportunities'].items() %}
-            <li>
-                <a href="{{ opportunity[1] }}">{{ opportunity[0] }}</a>: {{ description }}
-            </li>
-        {% endfor %}
-    </ul>
-
-    <a href="{{ url_for('index') }}">Go Back</a>
+    <h1>What FIU Degree should you pursue?</h1>
+    <p>Consider joining our amazing community. Your recommended degree is <strong>{{ tech_interest }}</strong>.</p>
+    <a href="{{ url_for('index') }}">Take the quiz again</a>
 </body>
 </html>

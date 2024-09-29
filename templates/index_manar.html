@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Interest Quiz</title>
+    <title>FIU Tech Quiz</title>
 </head>
 <body>
-    <h1>Tech Interest Quiz</h1>
-    <form method="POST">
-        {% for question in questions %}
-            <h3>{{ question.question }}</h3>
-            {% set index = loop.index %}
-            {% for option in question.options %}
-                <label>
-                    <input type="radio" name="{{ index }}" value="{{ option }}"> {{ option }}
-                </label><br>
-            {% endfor %}
+    <h1>Welcome to the FIU Tech Quiz!</h1>
+    <form method="post">
+        <p>{{ questions['question'] }}</p>
+        {% for option in questions['options'] %}
+            <input type="radio" name="initial" value="{{ option['answer'] }}"> {{ option['answer'] }}<br>
         {% endfor %}
-        <input type="submit" value="Submit">
+        <br>
+        <input type="submit" value="Next">
     </form>
 </body>
 </html>

@@ -1,139 +1,127 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
+app.secret_key = 'shellhacks'  # Set a secret key for session management
 
-questions = [
-    {
+# Initial set of questions
+questions = {
+    "initial": {
         "question": "Which area of technology interests you the most?",
         "options": [
-            "Software Development",
-            "Data Science",
-            "Cybersecurity",
-            "Network Engineering",
-            "User Experience (UX) Design"
+            {"answer": "Software Development", "next": "programming_languages"},
+            {"answer": "Data Science", "next": "data_analysis"},
+            {"answer": "Cybersecurity", "next": "security_questions"},
         ]
     },
-    {
+    "programming_languages": {
         "question": "What programming languages are you most interested in learning?",
         "options": [
-            "Python",
-            "JavaScript",
-            "Java",
-            "C++",
-            "None"
+            {"answer": "Python", "next": "programming_tools"},
+            {"answer": "JavaScript", "next": "programming_tools"},
+            {"answer": "Java", "next": "programming_tools"},
+            {"answer": "C++", "next": "programming_tools"},
         ]
     },
-    {
-        "question": "What type of projects do you enjoy working on?",
+    "data_analysis": {
+        "question": "What type of data analysis are you interested in?",
         "options": [
-            "Web Development",
-            "Mobile App Development",
-            "Data Analysis",
-            "System Security",
-            "Designing User Interfaces"
+            {"answer": "Statistical Analysis", "next": "data_tools"},
+            {"answer": "Machine Learning", "next": "data_tools"},
+            {"answer": "Data Visualization", "next": "data_tools"},
         ]
     },
-    {
-        "question": "How do you prefer to work?",
+    "security_questions": {
+        "question": "What aspect of cybersecurity interests you?",
         "options": [
-            "Team",
-            "Independently"
+            {"answer": "Network Security", "next": "security_tools"},
+            {"answer": "Application Security", "next": "security_tools"},
+            {"answer": "Ethical Hacking", "next": "security_tools"},
         ]
     },
-    {
-        "question": "What motivates you to pursue a career in tech?",
+    "programming_tools": {
+        "question": "Which programming tools are you most comfortable with?",
         "options": [
-            "Solving complex problems",
-            "Creating innovative solutions",
-            "Analyzing data",
-            "Designing user-friendly applications"
+            {"answer": "Git", "next": "results"},
+            {"answer": "VSCode", "next": "results"},
+            {"answer": "IntelliJ", "next": "results"},
         ]
-    }
-]
-
-common_opportunities = {
-    ("The Women In Tech Conference (WITCON)", "https://wicsfiu.github.io/witcon2024/"): "A conference focused on empowering women in technology through networking and skill-building workshops.",
-    ("Shellhacks", "https://shellhacks2024.devpost.com"): "A hackathon that brings together students to create innovative solutions.",
-    ("Break Through Tech Sprinternship", "https://miami.breakthroughtech.org/programs/sprinternships/"): "A program providing women and non-binary students with internship opportunities.",
-    ("Build INIT", ""): "An initiative at FIU designed to empower students through tech-focused workshops."
+    },
+    "data_tools": {
+        "question": "Which data analysis tools are you most comfortable with?",
+        "options": [
+            {"answer": "R", "next": "results"},
+            {"answer": "Excel", "next": "results"},
+            {"answer": "Tableau", "next": "results"},
+        ]
+    },
+    "security_tools": {
+        "question": "Which cybersecurity tools are you most comfortable with?",
+        "options": [
+            {"answer": "Wireshark", "next": "results"},
+            {"answer": "Burp Suite", "next": "results"},
+            {"answer": "Metasploit", "next": "results"},
+        ]
+    },
 }
 
-fiu_opportunities = {
-    "Computer Science": {
-        "Clubs": [
-            ("Women in Computer Science (WICS)", "https://wics.cs.fiu.edu"),
-            ("Society of Women Engineers (SWE)", "https://swe.org/"),
-            ("Code Crunch", "https://codecrunch.org/"),
-            ("INIT", "https://init.fiu.edu/")
-        ],
-        "Opportunities": common_opportunities
-    },
-    "Data Science": {
-        "Clubs": [
-            ("Women in Computer Science (WICS)", "https://wics.cs.fiu.edu"),
-            ("Break Through Tech", "https://breakthroughtech.org/")
-        ],
-        "Opportunities": common_opportunities
-    },
-    "Cybersecurity": {
-        "Clubs": [
-            ("Women in CyberSecurity (WICyS)", "https://wics.cs.fiu.edu")
-        ],
-        "Opportunities": common_opportunities
-    },
-    "Computer Engineering": {
-        "Clubs": [
-            ("Society of Women Engineers (SWE)", "https://swe.org/"),
-            ("IEEE", "https://www.ieee.org/")
-        ],
-        "Opportunities": common_opportunities
-    },
-    "Information Technology": {
-        "Clubs": [
-            ("Women in Computer Science (WICS)", "https://wics.cs.fiu.edu"),
-            ("Women in CyberSecurity (WICyS)", "https://www.wicys.org/")
-        ],
-        "Opportunities": common_opportunities
-    }
-}
-
+# Function to determine major based on user responses
 def determine_major(responses):
-    # Logic to determine the major based on user responses
     if "Software Development" in responses:
         return "Computer Science"
-    elif "Data Analysis" in responses:
+    elif "Data Science" in responses:
         return "Data Science"
-    elif "System Security" in responses:
+    elif "Cybersecurity" in responses:
         return "Cybersecurity"
-    elif "Network Engineering" in responses:
-        return "Computer Engineering"
-    elif "User Experience (UX) Design" in responses:
-        return "Information Technology"
     else:
         return None
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    session.clear()  # Clear session on the main page to restart the quiz
     if request.method == 'POST':
-        user_responses = []
-        for i in range(1, len(questions) + 1):
-            response = request.form.get(str(i))
-            user_responses.append(response)
+        user_response = request.form.get('initial')
+        if user_response:
+            # Store the user's response in session
+            session['responses'] = [user_response]
+            next_question = next(
+                (opt['next'] for opt in questions['initial']['options'] if opt['answer'] == user_response), None)
+            if next_question:
+                return redirect(url_for('question', question_name=next_question))
 
-        tech_interest = determine_major(user_responses)
-        print(f"Tech Interest: {tech_interest}")  # Debugging line
+    return render_template('index_manar.html', questions=questions['initial'])
 
-        if tech_interest:
-            return redirect(url_for('results', tech_interest=tech_interest))
+@app.route('/question/<question_name>', methods=['GET', 'POST'])
+def question(question_name):
+    if request.method == 'POST':
+        answer = request.form.get('answer')
+
+        # Retrieve responses from session and update with the new answer
+        responses = session.get('responses', [])
+        responses.append(answer)
+        session['responses'] = responses
+
+        # Determine the next question or redirect to results
+        question_data = questions.get(question_name)
+        next_question = next(
+            (opt['next'] for opt in question_data['options'] if opt['answer'] == answer), "results"
+        )
+
+        if next_question in questions:
+            return redirect(url_for('question', question_name=next_question))
         else:
-            return "Error: No valid tech interest found."
+            # Redirect to results, passing the recommended major
+            recommended_major = determine_major(responses)
+            return redirect(url_for('results', tech_interest=recommended_major))
 
-    return render_template('index_manar.html', questions=questions)
+    question_data = questions.get(question_name)
+    if not question_data:
+        return redirect(url_for('results'))  # Safeguard in case of an invalid question
+
+    return render_template('question.html', question=question_data['question'], options=question_data['options'])
 
 @app.route('/results/<tech_interest>')
 def results(tech_interest):
-    opportunities = fiu_opportunities.get(tech_interest, {})
-    return render_template('results.html', tech_interest=tech_interest, opportunities=opportunities)
+    return render_template('results.html', tech_interest=tech_interest)
 
 if __name__ == '__main__':
     app.run(debug=True)

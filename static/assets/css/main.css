@@ -3510,3 +3510,27 @@ input, select, textarea {
 			}
 
 	}
+
+input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 40%; /* Add margin to the left */
+    visibility: visible;
+    opacity: 1;
+    width: auto;
+    height: auto;
+    border: none; /* Remove any custom border */
+    background-color: transparent; /* Ensure background is transparent */
+    position: static; /* Reset the position */
+    z-index: auto; /* Reset the z-index */
+    -webkit-appearance: radio; /* Ensure default radio button appearance in WebKit browsers */
+    -moz-appearance: radio; /* Ensure default radio button appearance in Mozilla browsers */
+    appearance: radio; /* Ensure default radio button appearance in other browsers */
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+}
+
+

@@ -1,30 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Interest Quiz</title>
+    <title>FIU Tech Quiz</title>
     <link rel="stylesheet" href="static/assets/css/main.css" />
     <noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
 </head>
 <body>
-
 <section id="header">
-				<div class="inner">
-					<span class="icon solid major fa-cloud"></span>
-					<h1>Tech Interest Quiz</h1>
-					<form method="POST">
-        {% for question in questions %}
-            <h3>{{ question.question }}</h3>
-            {% set index = loop.index %}
-            {% for option in question.options %}
-                <label>
-                    <input type="radio" name="{{ index }}" value="{{ option }}"> {{ option }}
-                </label><br>
-            {% endfor %}
-        {% endfor %}
-        <input type="submit" value="Submit">
-    </form>
-			</section>
+    <div class="inner">
+        <span class="icon solid major fa-cloud"></span>
+        <h1>Welcome to the FIU Tech Quiz!</h1>
+        <form method="post">
+            <p>{{ questions['question'] }}</p>
+            <div class="radio-container">
+                {% for option in questions['options'] %}
+                    <div class="radio-item">
+                        <input type="radio" name="initial" value="{{ option['answer'] }}">
+                        <label for="option">{{ option['answer'] }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            <input type="submit" value="Next">
+        </form>
+    </div>
+</section>
+<section id="footer">
+    <ul class="icons">
+        <li><a href="https://x.com/FIU" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="https://www.facebook.com/floridainternational/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="https://www.instagram.com/fiuinstagram/?hl=en" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+    </ul>
+</section>
 </body>
 </html>

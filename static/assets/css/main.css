@@ -1,11 +1,6 @@
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic");
 
-/*
-	Photon by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
@@ -31,6 +26,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
+	min-height: 100vh
 }
 
 ol, ul {
@@ -3534,3 +3530,9 @@ input[type="radio"] {
 }
 
 
+html, body {
+    height: 100%;
+    margin: 0;
+    background: rgb(53,185,204);
+    background: linear-gradient(135deg, rgba(53,185,204,1) 0%, rgba(97,195,165,1) 52%, rgba(73,141,232,1) 100%);
+}
